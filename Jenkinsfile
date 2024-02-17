@@ -7,7 +7,7 @@ pipeline {
             steps {
                 gitcheckout(
                      branch: "main",
-                    url: "https://github.com/5G-Devops/Java_application.git"
+                    url: "https://github.com/5G-Devops/java-app-demo.git"
             )
             }
         }

@@ -4,7 +4,10 @@ pipeline {
     stages {
         stage('scm') {
             steps {
-                git branch: 'main', url: 'https://github.com/5G-Devops/java-app-demo.git'
+                gitcheckout(
+                     branch: "main",
+                    url: "https://github.com/5G-Devops/Java_application.git"
+            )
             }
         }
     }

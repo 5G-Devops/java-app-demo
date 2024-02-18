@@ -25,7 +25,7 @@ pipeline {
                 }
             }
         }
-        stage('mvn Intergration test : maven') {
+        stage('mvn Intergration test') {
             steps {
                 script{
                     mvnIntegration()

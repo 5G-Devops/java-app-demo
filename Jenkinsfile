@@ -53,5 +53,12 @@ pipeline {
                 }
             }
         }
+        stage('Dockerimagescan') {
+            steps {
+                script{
+                   dockerImgscan()
+                }
+            }
+        }
     }
 }

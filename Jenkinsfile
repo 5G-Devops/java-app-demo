@@ -50,9 +50,9 @@ pipeline {
             steps {
                 script{
                    dockerbuild( 
-                    ${userhub}: 'radhagowthamhub'
-                    ${imagename}: 'javaapp'
-                    ${magetag}: 'v1'
+                    userhub: 'radhagowthamhub'
+                    imagename: 'javaapp'
+                    magetag: 'v1'
 
                    )
                 }

@@ -51,7 +51,7 @@ pipeline {
                 script{
                    dockerbuild( 
                     userhub: 'radhagowthamhub'
-                    imagename: 'javaapp'
+                    imagename: 'springboot'
                     magetag: 'v1'
 
                    )

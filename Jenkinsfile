@@ -1,14 +1,14 @@
 @Library('Shared_lib') _
 pipeline {
     agent any
-parameters {
+//parameters {
 
-        choice {name:'action', choices: 'create/delete', description: 'choose create/delete'}
-    }
+  //      choice {name:'action', choices: 'create/delete', description: 'choose create/delete'}
+  //  }
 
     stages {
 
-        when { experssion { params.action == 'create' } }
+  //      when { experssion { params.action == 'create' } }
 
         stage('scm') {
             steps {

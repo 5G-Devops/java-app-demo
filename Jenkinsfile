@@ -46,5 +46,17 @@ pipeline {
                 }
             }
         }
+        stage('DockerBuild') {
+            steps {
+                script{
+                   dockerbuild( 
+                    ${userhub}: 'radhagowthamhub'
+                    ${imagename}: 'javaapp'
+                    ${magetag}: 'v1'
+
+                   )
+                }
+            }
+        }
     }
 }

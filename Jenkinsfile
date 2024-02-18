@@ -6,7 +6,7 @@ pipeline {
     }
 
     stages {
-        when { experssion {params.action == 'create' } }
+        when { experssion { params.action == 'create' } }
         stage('scm') {
             steps {
                 gitcheckout(

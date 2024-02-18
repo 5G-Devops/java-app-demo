@@ -49,12 +49,7 @@ pipeline {
         stage('DockerBuild') {
             steps {
                 script{
-                   dockerbuild( 
-                    userhub: 'radhagowthamhub'
-                    imagename: 'boot'
-                    magetag: 'v1'
-
-                   )
+                   dockerbuild()
                 }
             }
         }

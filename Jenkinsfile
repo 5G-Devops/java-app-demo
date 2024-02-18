@@ -32,5 +32,12 @@ pipeline {
                 }
             }
         }
+        stage('StaticcodeAnalysis') {
+            steps {
+                script{
+                    Staticcodeanalysis()
+                }
+            }
+        }
     }
 }

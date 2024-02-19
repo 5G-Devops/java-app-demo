@@ -1,8 +1,10 @@
 @Library('Shared_lib') _
 pipeline {
     agent any
-//parameters {
-
+    parameters {
+        string{name: 'ImageName', description: "name of the docker build", defaultValue: 'javaapp'}
+        string{name: 'ImageTag', description: "tag of the docker build", defaultValue: 'v1'}
+        string{name: 'DockerHubUser', description: "name of the application", defaultValue: 'radhagowthamhub'}
   //      choice {name:'action', choices: 'create/delete', description: 'choose create/delete'}
   //  }
 
@@ -49,16 +51,16 @@ pipeline {
         stage('DockerBuild') {
             steps {
                 script{
-                   dockerbuild()
+                   dockerbuild( "${params.ImageName}", "${params.ImageTag}", "${params.DockerHubUser}")
                 }
             }
         }
-        stage('Dockerimagescan') {
-            steps {
-                script{
-                   dockerImgscan()
-                }
-            }
+  //      stage('Dockerimagescan') {
+   //         steps {
+    //            script{
+    //               dockerImgscan()
+     //           }
+        //    }
         }
     }
 }

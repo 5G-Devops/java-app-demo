@@ -8,7 +8,6 @@ pipeline {
 
     stages {
 
-  //      when { experssion { params.action == 'create' } }
           when { expression { params.action == 'create' } }
                     
         stage('scm') {

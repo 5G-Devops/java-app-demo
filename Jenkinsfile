@@ -74,7 +74,7 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                script{
-                  dockerPublish()
+                  dockerPublish("${params.userHub}", "${params.imageName}", "${params.imageTag})
                }
            }
         }

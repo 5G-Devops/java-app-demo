@@ -8,9 +8,9 @@ pipeline {
 
     stages {
 
-        when { expression { params.action == 'create' } }
                     
         stage('scm') {
+            when { expression { params.action == 'create' } }
             steps {
                 gitcheckout(
                      branch: "main",

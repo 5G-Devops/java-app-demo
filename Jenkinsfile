@@ -59,5 +59,12 @@ pipeline {
                }
            }
         }
+        stage('PublishDockerImage2dockerHub') {
+            steps {
+               script{
+                  dockerPublish()
+               }
+           }
+        }
     }
 }

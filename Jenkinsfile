@@ -3,6 +3,9 @@ pipeline {
     agent any
     parameters {
      choice choices: ['create', 'delete'], description: 'choose create or delete', name: 'action'
+     string defaultValue: 'javaapp', description: ' name of the docker image', name: 'imageName'
+     string defaultValue: 'v1', description: ' Tag of the docker image', name: 'imageTag'
+     string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
 }
 
 
@@ -19,6 +22,7 @@ pipeline {
             }
         }
         stage('mvnunittest') {
+            when { expression { params.action == 'create' } }
             steps {
                 script{
                     mvnTest()
@@ -26,6 +30,7 @@ pipeline {
             }
         }
         stage('mvn Intergration test') {
+            when { expression { params.action == 'create' } }
             steps {
                 script{
                     mvnIntegration()
@@ -33,6 +38,7 @@ pipeline {
             }
         }
         stage('StaticcodeAnalysis') {
+            when { expression { params.action == 'create' } }
             steps {
                 script{
                     Staticcodeanalysis()
@@ -40,6 +46,7 @@ pipeline {
             }
         }
         stage('mavenBuild') {
+            when { expression { params.action == 'create' } }
             steps {
                 script{
                    mavenbuild()
@@ -47,13 +54,15 @@ pipeline {
             }
         }
         stage('DockerBuild') {
+            when { expression { params.action == 'create' } }
             steps {
                 script{
-                   dockerbuild()
+                   dockerbuild("${params.imageName}", "${params.imageTag}", "${params.userHub}")
                 }
             }
         }
        stage('Dockerimagescan') {
+        when { expression { params.action == 'create' } }
             steps {
                script{
                   dockerImgscan()
@@ -61,6 +70,7 @@ pipeline {
            }
         }
         stage('PublishDockerImage2dockerHub') {
+            when { expression { params.action == 'create' } }
             steps {
                script{
                   dockerPublish()

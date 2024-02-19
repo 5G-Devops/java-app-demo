@@ -3,9 +3,10 @@ pipeline {
     agent any
     parameters {
      choice choices: ['create', 'delete'], description: 'choose create or delete', name: 'action'
+     string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
      string defaultValue: 'javaapp', description: ' name of the docker image', name: 'imageName'
      string defaultValue: 'v1', description: ' Tag of the docker image', name: 'imageTag'
-     string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
+     
 }
 
 
@@ -57,7 +58,7 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script{
-                   dockerbuild("${params.imageName}", "${params.imageTag}", "${params.userHub}")
+                   dockerbuild(""${params.userHub}", ${params.imageName}", "${params.imageTag}")
                 }
             }
         }

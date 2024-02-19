@@ -2,7 +2,7 @@
 pipeline {
     agent any
     parameters {
-     choice choices: ['create/delete'], description: 'choose create or delete', name: 'action'
+     choice choices: ['create', 'delete'], description: 'choose create or delete', name: 'action'
 }
 
 

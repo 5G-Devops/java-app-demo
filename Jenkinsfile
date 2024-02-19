@@ -52,12 +52,12 @@ pipeline {
                 }
             }
         }
-  //      stage('Dockerimagescan') {
-   //         steps {
-    //            script{
-    //               dockerImgscan()
-     //           }
-        //    }
+       stage('Dockerimagescan') {
+            steps {
+               script{
+                  dockerImgscan()
+               }
+           }
         }
     }
 }

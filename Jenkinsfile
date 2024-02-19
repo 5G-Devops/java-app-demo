@@ -1,14 +1,16 @@
 @Library('Shared_lib') _
 pipeline {
     agent any
- // parameters{
-  //      choice {name:'action', choices: 'create/delete', description: 'choose create/delete'}
-  //  }
+    parameters {
+     choice choices: ['create/delete'], description: 'choose create or delete', name: 'action'
+}
+
 
     stages {
 
   //      when { experssion { params.action == 'create' } }
-
+          when { expression { params.action == 'create' } }
+                    
         stage('scm') {
             steps {
                 gitcheckout(

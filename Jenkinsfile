@@ -58,7 +58,7 @@ pipeline {
             when { expression { params.action == 'create' } }
             steps {
                 script{
-                   dockerbuild("${params.userHub}", ${params.imageName}", "${params.imageTag}")
+                   dockerbuild("${params.userHub}", "${params.imageName}", "${params.imageTag}")
                 }
             }
         }

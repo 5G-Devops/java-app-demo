@@ -33,15 +33,15 @@ pipeline {
                 }
             }
         }
-      /*  stage('mvn Intergration test') {
-            when { expression { params.action == 'create' } }
+        stage('mvn Intergration test') {
+            //when { expression { params.action == 'create' } }
             steps {
                 script{
-                    mvnIntegration()
+                    mvnIntegrationTest()
                 }
             }
         }
-        stage('StaticcodeAnalysis') {
+       /*  stage('StaticcodeAnalysis') {
             when { expression { params.action == 'create' } }
             steps {
                 script{

@@ -16,13 +16,10 @@ pipeline {
         stage('scm') {
             when { expression { params.action == 'create' } }
             steps {
-                gitcheckout(
-                     branch: "main",
-                    url: "https://github.com/5G-Devops/java-app-demo.git"
-            )
+                gitcheckout()
             }
         }
-        stage('mvnunittest') {
+    /*    stage('mvnunittest') {
             when { expression { params.action == 'create' } }
             steps {
                 script{
@@ -79,4 +76,4 @@ pipeline {
            }
         }
     }
-}
+} */

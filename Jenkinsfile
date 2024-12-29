@@ -1,13 +1,13 @@
-@Library('Shared_lib') _
+@Library('shared_lib') _
 pipeline {
     agent any
-    parameters {
+   /* parameters {
      choice choices: ['create', 'delete'], description: 'choose create or delete', name: 'action'
      string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
      string defaultValue: 'javaapp', description: ' name of the docker image', name: 'imageName'
      string defaultValue: 'v1', description: ' Tag of the docker image', name: 'imageTag'
      
-}
+} */
 
 
     stages {
@@ -75,5 +75,5 @@ pipeline {
                }
            }
         }
-    }
-} */
+    } */
+} 

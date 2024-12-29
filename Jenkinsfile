@@ -37,7 +37,7 @@ pipeline {
             //when { expression { params.action == 'create' } }
             steps {
                 script{
-                    mvnIntegrationTest()
+                    mvnintegrationTest()
                 }
             }
         }

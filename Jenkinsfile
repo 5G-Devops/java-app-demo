@@ -22,15 +22,15 @@ pipeline {
                 )
             }
         }
-    /*    stage('mvnunittest') {
-            when { expression { params.action == 'create' } }
+        stage('mvnunittest') {
+           // when { expression { params.action == 'create' } }
             steps {
                 script{
                     mvnTest()
                 }
             }
         }
-        stage('mvn Intergration test') {
+      /*  stage('mvn Intergration test') {
             when { expression { params.action == 'create' } }
             steps {
                 script{

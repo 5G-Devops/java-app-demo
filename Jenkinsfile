@@ -18,7 +18,7 @@ pipeline {
 
                     
         stage('scm') {
-            when { expression { params.action == 'Create' } }
+            when { expression { params.Action == 'Create' } }
             steps {
                 gitcheckout(
                  branch: "main",
@@ -27,7 +27,7 @@ pipeline {
             }
         }
         stage('mvnunittest') {
-            when { expression { params.action == 'Create' } }
+            when { expression { params.Action == 'Create' } }
             steps {
                 script{
                     unittest()
@@ -35,7 +35,7 @@ pipeline {
             }
         }
         stage('mvn Intergration test') {
-            when { expression { params.action == 'Create' } }
+            when { expression { params.Action == 'Create' } }
             steps {
                 script{
                     mvnintegrationTest()
@@ -43,7 +43,7 @@ pipeline {
             }
         }
         stage('StaticcodeAnalysis') {
-            when { expression { params.action == 'Create' } }
+            when { expression { params.Action == 'Create' } }
             steps {
                 script{
                     def SonarQubeCredentials = 'sonar-token'

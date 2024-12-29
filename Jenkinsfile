@@ -42,12 +42,21 @@ pipeline {
                 }
             }
         }
-        stage('StaticcodeAnalysis') {
+        stage('Staticcode Analysis: sonarqube') {
             when { expression { params.Action == 'Create' } }
             steps {
                 script{
                     def SonarQubeCredentials = 'sonar-token'
                     staticCodeAnalysis(SonarQubeCredentials)
+                }
+            }
+        }
+        stage('Qualitygate Status check: sonarqube') {
+            when { expression { params.Action == 'Create' } }
+            steps {
+                script{
+                    def SonarQubeCredentials = 'sonar-token'
+                    QualitygateStatus(SonarQubeCredentials)
                 }
             }
         }

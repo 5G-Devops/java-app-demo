@@ -8,6 +8,9 @@ pipeline {
      string defaultValue: 'v1', description: ' Tag of the docker image', name: 'imageTag'
      
 } */
+     tools{
+        maven 'maven3'
+     }
 
 
     stages {

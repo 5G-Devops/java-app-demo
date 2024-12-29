@@ -14,7 +14,7 @@ pipeline {
 
                     
         stage('scm') {
-            when { expression { params.action == 'create' } }
+            //when { expression { params.action == 'create' } }
             steps {
                 gitcheckout()
             }

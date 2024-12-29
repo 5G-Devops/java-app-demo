@@ -29,7 +29,7 @@ pipeline {
            // when { expression { params.action == 'create' } }
             steps {
                 script{
-                    mvnTest()
+                    unittest()
                 }
             }
         }

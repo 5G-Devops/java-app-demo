@@ -1,13 +1,14 @@
 @Library('shared_lib') _
 pipeline {
     agent any
-   /* parameters {
-     choice choices: ['create', 'delete'], description: 'choose create or delete', name: 'action'
-     string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
-     string defaultValue: 'javaapp', description: ' name of the docker image', name: 'imageName'
-     string defaultValue: 'v1', description: ' Tag of the docker image', name: 'imageTag'
+    parameters {
+        // choices: ['create', 'delete'], description: 'choose create or delete', name: 'action'
+     choice(name: 'Action', choices: ['Create', 'Delete'], description: 'choose create or delete')
+    // string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
+    // string defaultValue: 'javaapp', description: ' name of the docker image', name: 'imageName'
+    // string defaultValue: 'v1', description: ' Tag of the docker image', name: 'imageTag'
      
-} */
+} 
      tools {
         maven 'maven3'
      }
@@ -17,7 +18,7 @@ pipeline {
 
                     
         stage('scm') {
-            //when { expression { params.action == 'create' } }
+            when { expression { params.action == 'create' } }
             steps {
                 gitcheckout(
                  branch: "main",
@@ -26,7 +27,7 @@ pipeline {
             }
         }
         stage('mvnunittest') {
-           // when { expression { params.action == 'create' } }
+            when { expression { params.action == 'create' } }
             steps {
                 script{
                     unittest()
@@ -34,22 +35,23 @@ pipeline {
             }
         }
         stage('mvn Intergration test') {
-            //when { expression { params.action == 'create' } }
+            when { expression { params.action == 'create' } }
             steps {
                 script{
                     mvnintegrationTest()
                 }
             }
         }
-       /*  stage('StaticcodeAnalysis') {
+        stage('StaticcodeAnalysis') {
             when { expression { params.action == 'create' } }
             steps {
                 script{
-                    Staticcodeanalysis()
+                    def SonarQubeCredentials = 'sonar-token'
+                    staticCodeAnalysis(SonarQubeCredentials)
                 }
             }
         }
-        stage('mavenBuild') {
+      /*   stage('mavenBuild') {
             when { expression { params.action == 'create' } }
             steps {
                 script{

@@ -60,15 +60,15 @@ pipeline {
                 }
             }
         }
-      /*   stage('mavenBuild') {
-            when { expression { params.action == 'create' } }
+        stage('mavenBuild') {
+            when { expression { params.Action == 'Create' } }
             steps {
                 script{
-                   mavenbuild()
+                   MavenBuild()
                 }
             }
         }
-        stage('DockerBuild') {
+     /*    stage('DockerBuild') {
             when { expression { params.action == 'create' } }
             steps {
                 script{

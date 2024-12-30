@@ -87,14 +87,14 @@ pipeline {
                }
            }
         }
-      /*   stage('PublishDockerImage2dockerHub') {
-            when { expression { params.action == 'create' } }
+         stage('PublishDockerImageTodockerRegistry') {
+            when { expression { params.Action == 'Create' } }
             steps {
                script{
-                  dockerPublish("${params.userHub}", "${params.imageName}", "${params.imageTag}")
+                  imagePush("${params.userHub}", "${params.imageName}", "${params.imageTag}")
                }
            }
         }
-        */
+        
     } 
 } 

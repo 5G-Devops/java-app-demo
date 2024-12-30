@@ -37,7 +37,7 @@ pipeline {
             }
         }
         stage('mvnunittest: maven') {
-            when { expression { params.Action == 'Create' } }
+            when { expression { params.Action == 'create' } }
             steps {
                 script{
                     unittest()
@@ -45,7 +45,7 @@ pipeline {
             }
         }
         stage('mvn Intergration test: maven') {
-            when { expression { params.Action == 'Create' } }
+            when { expression { params.Action == 'create' } }
             steps {
                 script{
                     mvnintegrationTest()
@@ -53,7 +53,7 @@ pipeline {
             }
         }
         stage('Staticcode Analysis: sonarqube') {
-            when { expression { params.Action == 'Create' } }
+            when { expression { params.Action == 'create' } }
             steps {
                 script{
                     def SonarQubeCredentials = 'sonar-token'
@@ -62,7 +62,7 @@ pipeline {
             }
         }
         stage('Qualitygate Status check: sonarqube') {
-            when { expression { params.Action == 'Create' } }
+            when { expression { params.Action == 'create' } }
             steps {
                 script{
                     def SonarQubeCredentials = 'sonar-token'
@@ -71,7 +71,7 @@ pipeline {
             }
         }
         stage('Push artifact to local/remote:nexus') {
-            when { expression { params.Action == 'Create' } }
+            when { expression { params.Action == 'create' } }
             steps {
                 script{
                    MavenBuild()
@@ -80,7 +80,7 @@ pipeline {
         }
         
         stage('Docker Image Build') {
-            when { expression { params.Action == 'Create' } }
+            when { expression { params.Action == 'create' } }
             steps {
                 script{
                    dockerBuild("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")
@@ -88,7 +88,7 @@ pipeline {
             }
         }
       stage('Dockerimagescan') {
-        when { expression { params.Action == 'Create' } }
+        when { expression { params.Action == 'create' } }
             steps {
                script{
                   imageScan("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")
@@ -96,7 +96,7 @@ pipeline {
            }
         }
          stage('PublishDockerImageTodockerRegistry') {
-            when { expression { params.Action == 'Create' } }
+            when { expression { params.Action == 'create' } }
             steps {
                script{
                   imagePush("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")
@@ -104,7 +104,7 @@ pipeline {
            }
         }
         stage('DockerImage CleanUp') {
-            when { expression { params.Action == 'Create' } }
+            when { expression { params.Action == 'create' } }
             steps {
                script{
                   DockerImageCleanUp("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")

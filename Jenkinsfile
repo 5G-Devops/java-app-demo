@@ -4,10 +4,12 @@ pipeline {
     parameters {
         // choices: ['create', 'delete'], description: 'choose create or delete', name: 'action'
      choice(name: 'Action', choices: ['Create', 'Delete'], description: 'choose create or delete')
-    // string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
+     // string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
+     string(name: 'dockerregistry', defaultValue: 'radhagowthamhu' description: 'name of the docker registry')
     // string defaultValue: 'javaapp', description: ' name of the docker image', name: 'imageName'
+    string(name: 'imageName', defaultValue: 'javaapp' description: 'name of the docker imnage')
     // string defaultValue: 'v1', description: ' Tag of the docker image', name: 'imageTag'
-     
+     string(name: 'imageTag', defaultValue: 'v1' description: 'name of the docker image name')
 } 
      tools {
         maven 'maven3'
@@ -60,7 +62,7 @@ pipeline {
                 }
             }
         }
-        stage('mavenBuild') {
+        stage('Push artifact to local/remote:nexus') {
             when { expression { params.Action == 'Create' } }
             steps {
                 script{
@@ -68,19 +70,20 @@ pipeline {
                 }
             }
         }
-     /*    stage('DockerBuild') {
-            when { expression { params.action == 'create' } }
+        
+        stage('Docker Image Build') {
+            when { expression { params.Action == 'Create' } }
             steps {
                 script{
-                   dockerbuild("${params.userHub}", "${params.imageName}", "${params.imageTag}")
+                   dockerBuild("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")
                 }
             }
         }
-       stage('Dockerimagescan') {
+     /*  stage('Dockerimagescan') {
         when { expression { params.action == 'create' } }
             steps {
                script{
-                  dockerImgscan("${params.userHub}", "${params.imageName}", "${params.imageTag}")
+                  dockerImgscan("${params.registry}", "${params.imageName}", "${params.imageTag}")
                }
            }
         }

@@ -20,6 +20,7 @@ pipeline {
      }
      tools {
         maven 'maven3'
+        terraform 'terraform'
      }
 
 

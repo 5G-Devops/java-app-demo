@@ -91,7 +91,7 @@ pipeline {
             when { expression { params.Action == 'Create' } }
             steps {
                script{
-                  imagePush("${params.userHub}", "${params.imageName}", "${params.imageTag}")
+                  imagePush("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")
                }
            }
         }

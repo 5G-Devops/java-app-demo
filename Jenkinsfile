@@ -5,11 +5,11 @@ pipeline {
         // choices: ['create', 'delete'], description: 'choose create or delete', name: 'action'
      choice(name: 'Action', choices: ['Create', 'Delete'], description: 'choose create or delete')
      // string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
-     string(name: 'dockerregistry', defaultValue: 'radhagowthamhub' description: 'name of the docker registry')
+     string(name: 'dockerregistry', defaultValue: 'radhagowthamhub', description: 'name of the docker registry')
     // string defaultValue: 'javaapp', description: ' name of the docker image', name: 'imageName'
-    string(name: 'imageName', defaultValue: 'javaapp' description: 'name of the docker imnage')
+    string(name: 'imageName', defaultValue: 'javaapp', description: 'name of the docker imnage')
     // string defaultValue: 'v1', description: ' Tag of the docker image', name: 'imageTag'
-     string(name: 'imageTag', defaultValue: 'v1' description: 'name of the docker image name')
+     string(name: 'imageTag', defaultValue: 'v1', description: 'name of the docker image name')
 } 
      tools {
         maven 'maven3'

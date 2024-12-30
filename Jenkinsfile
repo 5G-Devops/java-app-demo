@@ -119,7 +119,7 @@ pipeline {
                   //  def REGION: "ap-south-1"
 
                    sh """ 
-                      terrraform init
+                      terraform init
                       terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' -var 'region=${params.Region}' --var=./config/terraform.tfvars
                      # terraform apply -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' -var 'region=${params.Region}' --var=./config/terraform.tfvars --auto-approve
                    """

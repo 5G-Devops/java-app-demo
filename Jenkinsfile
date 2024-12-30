@@ -15,8 +15,8 @@ pipeline {
 // Configuring access and secret keys (Without hardcoding in terraform scripts)
 // for this we have to create credentials (secret text) for access and secret keys in jenkins
      environment{   
-        ACCESS_KEY = credentials('')
-        SECRET_KEY = credentials('')
+        ACCESS_KEY = credentials('ACCESS_KEY')
+        SECRET_KEY = credentials('SECRET')
      }
      tools {
         maven 'maven3'

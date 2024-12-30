@@ -95,6 +95,15 @@ pipeline {
                }
            }
         }
+        stage('DockerImage CleanUp') {
+            when { expression { params.Action == 'Create' } }
+            steps {
+               script{
+                  DockerImageCleanUp("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")
+               }
+           }
+        }
+
         
     } 
 } 

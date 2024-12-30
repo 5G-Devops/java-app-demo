@@ -10,7 +10,14 @@ pipeline {
     string(name: 'imageName', defaultValue: 'javaapp', description: 'name of the docker imnage')
     // string defaultValue: 'v1', description: ' Tag of the docker image', name: 'imageTag'
      string(name: 'imageTag', defaultValue: 'v1', description: 'name of the docker image name')
+     string(name: 'Region', defaultValue: 'ap-south-1', description: 'name of the region')
 } 
+// Configuring access and secret keys (Without hardcoding in terraform scripts)
+// for this we have to create credentials (secret text) for access and secret keys in jenkins
+     environment{   
+        ACCESS_KEY = credentials('')
+        SECRET_KEY = credentials('')
+     }
      tools {
         maven 'maven3'
      }
@@ -28,7 +35,7 @@ pipeline {
                 )
             }
         }
-        stage('mvnunittest') {
+        stage('mvnunittest: maven') {
             when { expression { params.Action == 'Create' } }
             steps {
                 script{
@@ -36,7 +43,7 @@ pipeline {
                 }
             }
         }
-        stage('mvn Intergration test') {
+        stage('mvn Intergration test: maven') {
             when { expression { params.Action == 'Create' } }
             steps {
                 script{
@@ -103,7 +110,24 @@ pipeline {
                }
            }
         }
+// CI part is Completed and now whave to create Infrastructure/EKS Cluster using Terraform for deploying application
+        stage('Creating EKS Cluster: Terraform'){
+            steps{
+                script{
+                    dir('eks_module') {  // Terraform scripts are placed in 'eks_module' in same repo, To switch to that repo use pipeline snippet generator "change current directory"
+                  //  def REGION: "ap-south-1"
 
+                   sh """ 
+                      terrraform init
+                      terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' -var 'region=${params.Region}' --var=./config/terraform.tfvars
+                      terraform apply -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' -var 'region=${params.Region}' --var=./config/terraform.tfvars --auto-approve
+                   """
+                   
+   
+                  }
+                }
+            }
+        }
         
     } 
 } 

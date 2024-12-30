@@ -80,7 +80,7 @@ pipeline {
             }
         }
       stage('Dockerimagescan') {
-        when { expression { params.action == 'create' } }
+        when { expression { params.Action == 'Create' } }
             steps {
                script{
                   imageScan("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")

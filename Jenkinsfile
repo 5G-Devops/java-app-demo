@@ -79,15 +79,15 @@ pipeline {
                 }
             }
         }
-     /*  stage('Dockerimagescan') {
+      stage('Dockerimagescan') {
         when { expression { params.action == 'create' } }
             steps {
                script{
-                  dockerImgscan("${params.registry}", "${params.imageName}", "${params.imageTag}")
+                  imageScan("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")
                }
            }
         }
-        stage('PublishDockerImage2dockerHub') {
+      /*   stage('PublishDockerImage2dockerHub') {
             when { expression { params.action == 'create' } }
             steps {
                script{

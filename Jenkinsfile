@@ -3,7 +3,7 @@ pipeline {
     agent any
     parameters {
         // choices: ['create', 'delete'], description: 'choose create or delete', name: 'action'
-     choice(name: 'Action', choices: ['Create', 'Delete'], description: 'choose create or delete')
+     choice(name: 'Action', choices: ['create', 'Delete'], description: 'choose create or delete')
      // string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
      string(name: 'dockerregistry', defaultValue: 'radhagowthamhub', description: 'name of the docker registry')
     // string defaultValue: 'javaapp', description: ' name of the docker image', name: 'imageName'
@@ -28,7 +28,7 @@ pipeline {
 
                     
         stage('scm') {
-            when { expression { params.Action == 'Create' } }
+            when { expression { params.Action == 'create' } }
             steps {
                 gitcheckout(
                  branch: "main",
@@ -104,7 +104,7 @@ pipeline {
            }
         }
         stage('DockerImage CleanUp') {
-            when { expression { params.Action == 'create' } }
+            when { expression { params.Action == create' } }
             steps {
                script{
                   DockerImageCleanUp("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")
@@ -121,7 +121,7 @@ pipeline {
                    sh """ 
                       terraform init
                       terraform plan -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' -var 'region=${params.Region}' --var-file=./config/terraform.tfvars
-                    
+                      terraform apply -var 'access_key=$ACCESS_KEY' -var 'secret_key=$SECRET_KEY' -var 'region=${params.Region}' --var-file=./config/terraform.tfvars --auto-approve
                    """
                    
    

@@ -1,8 +1,3 @@
-region = ""
-access_key = ""
-secret_key = "" 
-
-
 # define the map for inputs
 # define input values as a map
 vpc_config = {

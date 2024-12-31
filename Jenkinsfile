@@ -3,7 +3,7 @@ pipeline {
     agent any
     parameters {
         // choices: ['create', 'delete'], description: 'choose create or delete', name: 'action'
-     choice(name: 'Action', choices: ['create', 'Delete'], description: 'choose create or delete')
+     choice(name: 'Action', choices: ['Create', 'Delete'], description: 'choose create or delete')
      // string defaultValue: 'radhagowthamhub', description: 'name of the docker registry ', name: 'userHub'
      string(name: 'dockerregistry', defaultValue: 'radhagowthamhub', description: 'name of the docker registry')
     // string defaultValue: 'javaapp', description: ' name of the docker image', name: 'imageName'
@@ -11,6 +11,7 @@ pipeline {
     // string defaultValue: 'v1', description: ' Tag of the docker image', name: 'imageTag'
      string(name: 'imageTag', defaultValue: 'v1', description: 'name of the docker image name')
      string(name: 'Region', defaultValue: 'ap-south-1', description: 'name of the region')
+    string(name: 'Cluster', defaultValue: 'demo-cluster', description: 'name of the EKS-Cluster')
 } 
 // Configuring access and secret keys (Without hardcoding in terraform scripts)
 // for this we have to create credentials (secret text) for access and secret keys in jenkins
@@ -104,7 +105,7 @@ pipeline {
            }
         }
         stage('DockerImage CleanUp') {
-            when { expression { params.Action == create' } }
+            when { expression { params.Action == 'create' } }
             steps {
                script{
                   DockerImageCleanUp("${params.dockerregistry}", "${params.imageName}", "${params.imageTag}")
@@ -113,6 +114,7 @@ pipeline {
         }
 // CI part is Completed and now whave to create Infrastructure/EKS Cluster using Terraform for deploying application
         stage('Creating EKS Cluster: Terraform'){
+            when { expression { params.Action == 'create' } }
             steps{
                 script{
                     dir('eks_module') {  // Terraform scripts are placed in 'eks_module' in same repo, To switch to that repo use pipeline snippet generator "change current directory"
@@ -129,6 +131,44 @@ pipeline {
                 }
             }
         }
-        
+        // Connect to the EKS Cluster
+        stage('Connect to the EKS cluster'){
+            when { expression { params.Action == 'create' } }
+            steps{
+                script{
+                    sh """
+                    aws configure set aws_access_key_id $ACCESS_KEY
+                    aws configure set aws_secret_key_id $SECRET_KEY
+                    aws configure set aws_region ${params.Region}
+                    aws eks --region ${params.Region} update-kubeconfig --name ${'Cluster'}
+                    kubectl get nodes
+                     
+                    """
+                }
+            }
+        }
+        stage('Deployment on EKS Cluster'){
+            when { expression {  params.action == 'create' } }
+            steps{
+                script{
+                  
+                  def apply = false
+
+                  try{
+                    input message: 'please confirm to deploy on eks', ok: 'Ready to apply the config ?'
+                    apply = true
+                  }catch(err){
+                    apply= false
+                    currentBuild.result  = 'UNSTABLE'
+                  }
+                  if(apply){
+
+                    sh """
+                      kubectl apply -f .
+                    """
+                  }
+                }
+            }
+        }   
     } 
 } 
